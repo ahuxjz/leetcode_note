@@ -1,0 +1,49 @@
+
+给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。
+
+输入: 5
+输出:
+[
+     [1],
+    [1,1],
+   [1,2,1],
+  [1,3,3,1],
+ [1,4,6,4,1]
+]
+
+
+java:
+
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+          List<List<Integer>> triangle = new ArrayList<List<Integer>>();
+          //如果只有0行，直接返回triangle
+          if(numRows==0){
+              return triangle;
+          }
+          //创建第一行的元素，始终为1
+          triangle.add(new ArrayList<>());
+          triangle.get(0).add(1);
+          //遍历循环每行
+          for(int rowNum=1;rowNum<numRows;rowNum++){
+              //创建该行
+              List<Integer> row = new ArrayList<>();
+              //创建该行的前一行
+              List<Integer> prevRow = triangle.get(rowNum-1);
+              //初始化每一行第一个元素为1
+              row.add(1);
+              //因为第几行就有几个元素，每一行第一个元素已经添加为1，所以从j=1开始遍历rowNum行个元素
+              for(int j=1;j<rowNum;j++){
+                  //改行添加的元素为前一行前一个元素+当前元素
+                  row.add(prevRow.get(j-1)+prevRow.get(j));
+              }
+              //结束后在元素末尾加上始终为1的元素
+              row.add(1);
+              //将row加入到triangle
+              triangle.add(row);
+          }
+          //返回triangle
+          return triangle;
+    }
+}
+
